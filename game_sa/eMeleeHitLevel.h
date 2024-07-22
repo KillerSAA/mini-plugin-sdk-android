@@ -1,0 +1,13 @@
+#pragma once
+
+enum eMeleeHitLevel : int32_t
+{
+  MHIT_LEVEL_HIGH = 0x0,
+  MHIT_LEVEL_LOW = 0x1,
+  MHIT_LEVEL_GROUND = 0x2,
+  MHIT_LEVEL_BEHIND = 0x3,
+  MHIT_LEVEL_HIGH_LONG = 0x4,
+  MHIT_LEVEL_LOW_LONG = 0x5,
+  MHIT_LEVEL_GROUND_LONG = 0x6,
+  MHIT_LEVEL_NUM = 0x7,
+};
