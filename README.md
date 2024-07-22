@@ -12,3 +12,9 @@ Estou fazendo um plugin sdk para o gta sa android, não preciso que seja igual, 
 Ainda falta muita coisa, pois sou apenas uma pessoa, espero que alguém possa ajudar.
 
 E não, eu não fiz algo como copiar todos os arquivos do plugin sdk e apenas editar eles(isso não é uma boa forma, pois diversas structs no mobile contém tamanhos diferentes, valores trocados/tirados, etc), estou utilizando uma idb do gta sa 2.00(funcionará apenas nessa versão, talvez na 2.10 tambem?) que está bem documentada, mas obviamente não podemos confiar 100% em databases do ida, então tomei cuidado e analisei algumas coisas antes, como parametros de entrada e saida de funções e outras coisas.
+
+para compilar os arquivos cpp que estão em `game_sa`, coloque isso em seu Android.mk:
+```makefile
+FILE_LIST := $(wildcard $(LOCAL_PATH)/game_sa/*.cpp)
+LOCAL_SRC_FILES += $(patsubst $(LOCAL_PATH)/%, %, $(FILE_LIST))
+```
