@@ -6,6 +6,12 @@ There is still a lot left to do, as I am only one person, I hope someone can hel
 
 And no, I didn't do something like copy all the sdk plugin files and just edit them (this is not a good way, as several structs on mobile contain different sizes, changed/removed values, etc.), I'm using a gta database sa 2.00 (it will only work in this version, maybe in 2.10 too?) which is well documented, but obviously we cannot trust 100% in ida databases, so I was careful and analyzed some things beforehand, such as function input and output parameters and others things.
 
+to compile the cpp files that are in `game_sa`, put this in your Android.mk:
+```makefile
+FILE_LIST := $(wildcard $(LOCAL_PATH)/game_sa/*.cpp)
+LOCAL_SRC_FILES += $(patsubst $(LOCAL_PATH)/%, %, $(FILE_LIST))
+```
+
 PT:
 Estou fazendo um plugin sdk para o gta sa android, não preciso que seja igual, apenas quero que os modders do gta sa android consigam programar de maneira decente.
 
