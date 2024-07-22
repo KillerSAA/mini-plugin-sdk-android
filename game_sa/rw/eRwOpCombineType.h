@@ -1,0 +1,9 @@
+#pragma once
+
+enum RwOpCombineType : int32_t
+{
+  rwCOMBINEREPLACE = 0x0,
+  rwCOMBINEPRECONCAT = 0x1,
+  rwCOMBINEPOSTCONCAT = 0x2,
+  rwOPCOMBINETYPEFORCEENUMSIZEINT = 0x7FFFFFFF,
+};
