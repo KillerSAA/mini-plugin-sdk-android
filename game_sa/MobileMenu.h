@@ -42,10 +42,11 @@ struct MobileMenu
   OSPointerState pointerState[4]; // enum
   unsigned int pointerPress[4];
 
+  MobileMenu(); // MobileMenu()
+  ~MobileMenu(); // ~MobileMenu()
+
   // no-statics //
   void Initialize();
-  void MobileMenu_i(); // MobileMenu()
-  void MobileMenu_e(); // ~MobileMenu()
   void Render();
   void ProcessPending();
   void PopAllScreens();

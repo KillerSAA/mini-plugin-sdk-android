@@ -6,11 +6,11 @@
 
 MobileMenu* gMobileMenu = (MobileMenu*)(GetSym("gMobileMenu"));
 
-void MobileMenu::MobileMenu_i() {
+MobileMenu::MobileMenu() {
     Call::FunctionFastCall<void>(GetSym("_ZN10MobileMenuC2Ev"));
 }
 
-void MobileMenu::MobileMenu_e() {
+MobileMenu::~MobileMenu() {
     Call::FunctionFastCall<void>(GetSym("_ZN10MobileMenuD2Ev"));
 }
 

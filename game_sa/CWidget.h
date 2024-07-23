@@ -43,7 +43,7 @@ struct CWidget
     static CWidget* m_pReleasedWidget; // m_pReleasedWidget[4]
     static CWidget* m_pSwipedWidget; // m_pSwipedWidget[4]
     static CWidget* m_pPinchZoomWidget;
-    static CVector2D &m_vecTouchAnchor; // m_vecTouchAnchor[4]
+    static CVector2D* m_vecTouchAnchor; // m_vecTouchAnchor[4]
     static float &SWIPE_DISTANCE; 
 
     CWidget(const char* pszSprite, WidgetPosition *WidgetPos, unsigned int nFlags, HIDMapping Mapping);
