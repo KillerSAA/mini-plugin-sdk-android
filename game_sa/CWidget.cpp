@@ -4,6 +4,15 @@
 
 #include "CWidget.h"
 
+double &CWidget::m_fTime = *(double*)GetSym("_ZN7CWidget7m_fTimeE");
+double &CWidget::m_fElapsedTime = *(double*)GetSym("_ZN7CWidget14m_fElapsedTimeE");
+bool &CWidget::bInsidePause = *(bool*)GetSym("_ZN7CWidget14m_bInsidePauseE");
+CWidget* CWidget::m_pInitialTouchWidget = (CWidget*)GetSym("_ZN7CWidget21m_pInitialTouchWidgetE");
+CWidget* CWidget::m_pReleasedWidget = (CWidget*)GetSym("_ZN7CWidget17m_pReleasedWidgetE");
+CWidget* CWidget::m_pSwipedWidget = (CWidget*)GetSym("_ZN7CWidget15m_pSwipedWidgetE");
+CWidget* CWidget::m_pPinchZoomWidget = (CWidget*)GetSym("_ZN7CWidget18m_pPinchZoomWidgetE");
+CVector2D &CWidget::m_vecTouchAnchor = *(CVector2D*)GetSym("_ZN7CWidget16m_vecTouchAnchorE");
+
 CWidget::CWidget(const char* pszSprite, WidgetPosition *WidgetPos, unsigned int nFlags, HIDMapping Mapping) {
     Call::FunctionFastCall<void, const char*, WidgetPosition*, unsigned int, HIDMapping>(GetSym("j__ZN7CWidgetC2EPKcRK14WidgetPositionj10HIDMapping"), pszSprite, WidgetPos, nFlags, Mapping);
 }
