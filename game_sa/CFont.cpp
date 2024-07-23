@@ -1,8 +1,6 @@
 #include <mod/amlmod.h>
 #include <string>
 #include <game_sa/sdk.h> 
-#include <ARMHook/CHook.h>
-#include <ARMHook/CPatch.h>
 #include <sdk/Call.h>
 
 #include "CRGBA.h"
