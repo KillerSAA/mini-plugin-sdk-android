@@ -13,7 +13,7 @@
 enum eCamMode : uint16_t {
     MODE_NONE = 0x0,
     MODE_TOPDOWN = 0x1,
-    MODE_GTACLASSIC = 0x2,
+    MODE_GTAstructIC = 0x2,
     MODE_BEHINDCAR = 0x3,
     MODE_FOLLOWPED = 0x4,
     MODE_AIMING = 0x5,

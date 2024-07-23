@@ -27,8 +27,7 @@ struct RwRGBA// : RwRGBA_Base
 };
 //struct CRGBA : RwRGBA {};
 
-class CRGBA {
-public:
+struct CRGBA {
     unsigned char r;
     unsigned char g;
     unsigned char b;
