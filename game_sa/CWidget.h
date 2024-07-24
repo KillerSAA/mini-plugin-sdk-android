@@ -7,17 +7,22 @@
 #include "eHIDMapping.h"
 #include "CVector.h"
 
+struct WidgetPosition {
+    float m_fOriginX;
+    float m_fOriginY;
+    float m_fScaleX;
+    float m_fScaleY;
+};
+
 struct CWidget
 {
     int (**_vptr$CWidget)(void);
     HIDMapping m_HIDMapping;
     CSprite2d m_Sprite;
-    struct WidgetPosition {
     float m_fOriginX;
     float m_fOriginY;
     float m_fScaleX;
     float m_fScaleY;
-    };
     float m_fFadeRate;
     CRect m_RectScreen;
     float m_fExtraPaddingScale;
