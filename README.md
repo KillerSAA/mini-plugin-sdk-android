@@ -10,6 +10,7 @@ to compile the cpp files that are in `game_sa`, put this in your Android.mk:
 ```makefile
 FILE_LIST := $(wildcard $(LOCAL_PATH)/game_sa/*.cpp)
 LOCAL_SRC_FILES += $(patsubst $(LOCAL_PATH)/%, %, $(FILE_LIST))
+LOCAL_CFLAGS += -O2 -mfloat-abi=softfp -DNDEBUG -std=c++17
 ```
 
 PT:
@@ -23,4 +24,5 @@ para compilar os arquivos cpp que estão em `game_sa`, coloque isso em seu Andro
 ```makefile
 FILE_LIST := $(wildcard $(LOCAL_PATH)/game_sa/*.cpp)
 LOCAL_SRC_FILES += $(patsubst $(LOCAL_PATH)/%, %, $(FILE_LIST))
+LOCAL_CFLAGS += -O2 -mfloat-abi=softfp -DNDEBUG -std=c++17
 ```
