@@ -1,6 +1,6 @@
 #pragma once
 
-struct RwMatrix;
+#include "rw/RwMatrix.h"
 
 struct CMatrix
 {
