@@ -53,50 +53,50 @@ CAEWeatherAudioEntity &CWeather::m_WeatherAudioEntity = *(CAEWeatherAudioEntity*
 // functions //
 
 void CWeather::AddRain() {
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather7AddRainEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather7AddRainEv"));
 }
 
 void CWeather::AddSandStormParticles(){
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather21AddSandStormParticlesEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather21AddSandStormParticlesEv"));
 }
 
 unsigned char* CWeather::FindWeatherTypesList() {
-    return Call::FunctionFastCall<unsigned char*>(GetSym("_ZN8CWeather20FindWeatherTypesListEv_ptr"));
+    return Call::FunctionFastCall<unsigned char*>(GetSym("_ZN8CWeather20FindWeatherTypesListEv"));
 }
 
 void CWeather::ForceWeather(short weatherType) {
-    Call::FunctionFastCall<void, short>(GetSym("_ZN8CWeather12ForceWeatherEs_ptr"), weatherType);
+    Call::FunctionFastCall<void, short>(GetSym("_ZN8CWeather12ForceWeatherEs"), weatherType);
 }
 
 void CWeather::ForceWeatherNow(short weatherType) {
-    Call::FunctionFastCall<void, short>(GetSym("_ZN8CWeather15ForceWeatherNowEs_ptr"), weatherType);
+    Call::FunctionFastCall<void, short>(GetSym("_ZN8CWeather15ForceWeatherNowEs"), weatherType);
 }
 
 bool CWeather::ForecastWeather(int weatherType, int numSteps) {
-    return Call::FunctionFastCall<bool, int, int>(GetSym("_ZN8CWeather15ForecastWeatherEii_ptr"), weatherType, numSteps);
+    return Call::FunctionFastCall<bool, int, int>(GetSym("_ZN8CWeather15ForecastWeatherEii"), weatherType, numSteps);
 }
 
 void CWeather::Init() {
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather4InitEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather4InitEv"));
 }
 
 void CWeather::ReleaseWeather() {
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather14ReleaseWeatherEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather14ReleaseWeatherEv"));
 }
 
 void CWeather::RenderRainStreaks() {
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather17RenderRainStreaksEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather17RenderRainStreaksEv"));
 }
 
 void CWeather::SetWeatherToAppropriateTypeNow() {
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather30SetWeatherToAppropriateTypeNowEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather30SetWeatherToAppropriateTypeNowEv"));
 }
 
 void CWeather::Update() {
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather6UpdateEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather6UpdateEv"));
 }
 void CWeather::UpdateInTunnelness() {
-    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather18UpdateInTunnelnessEv_ptr"));
+    Call::FunctionFastCall<void>(GetSym("_ZN8CWeather18UpdateInTunnelnessEv"));
 }
 
 void CWeather::UpdateWeatherRegion(CVector* posn) {
