@@ -1,5 +1,4 @@
-#ifndef RwMatrix_H
-#define RwMatrix_H
+#pragma once
 
 #include <game_sa/rw/RwVectors.h>
 
@@ -14,5 +13,3 @@ struct RwMatrix
   RwV3d pos;
   uint32_t pad3;
 };
-
-#endif
