@@ -192,4 +192,3 @@ inline float DistanceBetweenPoints(const CVector2D &pointOne, const CVector2D &p
     diff.x = dx; diff.y = dy;
     return diff.Magnitude();
 }
-

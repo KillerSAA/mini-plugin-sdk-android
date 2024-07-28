@@ -94,5 +94,5 @@ struct CWeather { // tks plugin sdk :)
     static void SetWeatherToAppropriateTypeNow();
     static void Update();
     static void UpdateInTunnelness();
-    static void UpdateWeatherRegion(CVector* posn);
+    static void UpdateWeatherRegion(CVector* posn); // This is not used by the game
 };
