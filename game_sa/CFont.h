@@ -61,7 +61,7 @@ struct CFont
     // tags processing
     static char *ParseToken(char *text, CRGBA & color, bool isBlip, char *tag);
     // text scaling
-    static void SetScale(float w, float h);
+    static void SetScale(float fHeight);
     // text scaling depends on current language
     //static void SetScaleForCurrentlanguage(float w, float h);  doesn't exist on sa mobile?
 
