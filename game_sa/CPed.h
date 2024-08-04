@@ -1,13 +1,13 @@
 #pragma once
 
-#include <game_sa/CWeapon.h>
-#include <game_sa/CPhysical.h>
-#include <game_sa/CAEPedAudioEntity.h>
-#include <game_sa/CAEPedWeaponAudioEntity.h>
-#include <game_sa/CPedIntelligence.h>
-#include <game_sa/rw/RwFrame.h>
-#include <game_sa/CCoverPoint.h>
-#include <game_sa/CPlayerPedData.h>
+#include "CWeapon.h"
+#include "CPhysical.h"
+#include "CAEPedAudioEntity.h"
+#include "CAEPedWeaponAudioEntity.h"
+#include "CPedIntelligence.h"
+#include "rw/RwFrame.h"
+#include "CCoverPoint.h"
+#include "CPlayerPedData.h"
 #include "RpClump.h"
 #include "AnimBlendFrameData.h"
 #include "CAcquaintance.h"
@@ -15,6 +15,10 @@
 #include "CAccident.h"
 #include "CPedStats.h"
 #include "CEntryExit.h"
+#include "CStoredCollPoly.h"
+#include "AssocGroupId.h"
+#include "CVehicle.h"
+#include "CFire.h"
 
 enum eMoveState : int32_t
 {
@@ -97,6 +101,9 @@ enum ePedState : int32_t
   PED_DEPLOY_STINGER = 0x40,
   PED_NUM_STATES = 0x41,
 };
+
+struct CPlayerPedData;
+struct CVehicle;
 
 struct CPedFlags
 {
