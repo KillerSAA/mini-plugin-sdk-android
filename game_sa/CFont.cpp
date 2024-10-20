@@ -32,8 +32,8 @@ char *CFont::ParseToken(char *text, CRGBA & color, bool isBlip, char *tag) {
     return Call::FunctionFastCall<char*, char*, CRGBA&, bool, char*>(GetSym("_ZN5CFont10ParseTokenEPtR5CRGBAhPc"), text, color, isBlip, tag);
 }
 
-void CFont::SetScale(float w, float h) {
-    Call::FunctionFastCall<void, float, float>(GetSym("_ZN5CFont8SetScaleEf"), w, h);
+void CFont::SetScale(float fHeight) {
+    Call::FunctionFastCall<void, float>(GetSym("_ZN5CFont8SetScaleEf"), fHeight);
 }
 
 void CFont::SetSlantRefPoint(float x, float y) {
