@@ -2,7 +2,7 @@
 
 #include "CPlayerInfo.h"
 #include "CSector.h"
-#include "CRepeatSector.h"
+#include "CSector.h"
 #include "CPtrList.h"
 
 struct CWorld
