@@ -10,5 +10,9 @@ bool CCamera::OnCamModeState(eCamMode iMode) {
     else return false;
 }
 
+CVector CCamera::GetPosition() {
+    return TheCamera->m_vecGameCamPos;
+}
+
 // ........
 
