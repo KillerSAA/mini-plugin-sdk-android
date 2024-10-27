@@ -478,6 +478,8 @@ struct CCamera : CPlaceable {
   bool m_bInitLockOnCam;
   int8_t m_undefined28; // ??
   int8_t m_undefined29; // ??
+
+  static bool OnCamModeState(eCamMode iMode);
 };
 
 extern CCamera* TheCamera;
