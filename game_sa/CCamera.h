@@ -480,6 +480,7 @@ struct CCamera : CPlaceable {
   int8_t m_undefined29; // ??
 
   static bool OnCamModeState(eCamMode iMode);
+  static CVector GetPosition();
 };
 
 extern CCamera* TheCamera;
