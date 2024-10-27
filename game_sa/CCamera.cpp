@@ -4,7 +4,7 @@
 
 CCamera* TheCamera = (CCamera*)(GetSym("TheCamera"));
 
-bool OnCamModeState(eCamMode iMode) {                                   
+bool CCamera::OnCamModeState(eCamMode iMode) {                                   
     int id = TheCamera->m_ActiveCam; // current camera id
     if(TheCamera->Cams[id].Mode == iMode) return true;
     else return false;
