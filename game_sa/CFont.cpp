@@ -34,6 +34,11 @@ void CFont::SetScale(float fHeight) {
     Call::FunctionFastCall<void, float>(GetSym("_ZN5CFont8SetScaleEf"), fHeight);
 }
 
+void CFont::SetScale2(float fWidth, float fHeight) {
+    FontDetails->ScaleX = fWidth * 0.54f;
+    FontDetails->ScaleY = fHeight;
+}
+
 void CFont::SetSlantRefPoint(float x, float y) {
     Call::FunctionFastCall<void, float, float>(GetSym("_ZN5CFont16SetSlantRefPointEff"), x, y);
 }
