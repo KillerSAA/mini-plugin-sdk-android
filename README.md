@@ -26,3 +26,5 @@ FILE_LIST := $(wildcard $(LOCAL_PATH)/game_sa/*.cpp)
 LOCAL_SRC_FILES += $(patsubst $(LOCAL_PATH)/%, %, $(FILE_LIST))
 LOCAL_CFLAGS += -O2 -mfloat-abi=softfp -DNDEBUG -std=c++17
 ```
+
+thanks plugin sdk(https://github.com/DK22Pac/plugin-sdk/tree/ce73538cb2d354349cf297370a81a98ac83bff97)
