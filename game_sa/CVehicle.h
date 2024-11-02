@@ -9,7 +9,6 @@
 #include <game_sa/rw/RwFrame.h>
 #include <game_sa/CColPoint.h>
 #include <game_sa/CBouncingPanel.h>
-#include <game_sa/CPed.h>
 #include <game_sa/CFire.h>
 #include <game_sa/CStoredCollPoly.h>
 #include <game_sa/CAutoPilot.h>
