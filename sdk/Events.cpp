@@ -22,8 +22,6 @@ CEvents drawRadarEvent(drawRadar);
 CEvents drawBlipsEvent(drawBlips);
 CEvents drawRadarOverlayEvent(drawRadarOverlay);
 CEvents drawMenuEvent(drawMenu);
-
-// new events
 CEvents vehicleRenderEvent(vehicleRender);
 
 void CEvents::pedRenderCalls(CPed* ped) {
