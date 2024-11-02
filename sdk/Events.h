@@ -4,12 +4,6 @@
 #include <game_sa/CObject.h>
 #include <game_sa/eNVTouchEventType.h>
 
-/*
-example:
-pedRenderEvent += [](CPed* ped) {
-            
-};
-*/
 enum EventsType {
 	drawHud, //_ZN4CHud4DrawEv
 	drawing, //_ZN9CPopCycle7DisplayEv
@@ -26,11 +20,16 @@ enum EventsType {
 	pedRender, //_ZN4CPed6RenderEv                BLX CEntity::Render(void)
 	objectRender, // _ZN7CObject6RenderEv         BLX CEntity::Render(void)
 	objectPreRender, // _ZN7CObject9PreRenderEv   BLX CEntity::PreRender(void)
+	objectCtor,
+	objectDtor,
 	vehicleRender, // _ZN8CVehicle6RenderEv       B.W CEntity::Render(void)
+	vehicleCtor,
+	vehicleDtor,
 	touch, //_Z14AND_TouchEventiiii
 	processScripts, // _ZN7CCranes12UpdateCranesEv
 	initScripts, // _ZN11CTheScripts4InitEv
 	renderClouds, // _ZN7CClouds6RenderEv
+	initGame // _Z14InitialiseGamev   BLX InitialiseGame(void)
 };
 
 using EventPtr = std::function<void()>;
@@ -44,7 +43,6 @@ using EventPtrTouch = std::function<void(int, int, int, int)>;
 
 class EventsList {
 public:
-
 	std::vector<EventPtr> events; // parameterless events
 	std::vector<EventPtrPed> PedEvents;
 	std::vector<EventPtrObj> ObjEvents;
@@ -69,9 +67,9 @@ public:
 	CEvents(EventsType type);
 
 	// arguments
-    	void operator+=(EventPtr p) {
-        	events.push_back(p);
-    	}
+    void operator+=(EventPtr p) {
+        events.push_back(p);
+    }
 	void operator+=(EventPtrPed p) {
 		PedEvents.push_back(p);
 	}
@@ -91,6 +89,7 @@ public:
 // funcs
 	static void initRwCalls();
 	static void initPoolsCalls();
+	static void initGameCalls();
 	static void pedCtorCalls(CPed* ped);
 	static void pedDtorCalls(CPed* ped);
 	static void pedRenderCalls(CPed* ped);
@@ -108,8 +107,10 @@ public:
 	static void processScriptsCalls();
 	static void initScriptsCalls();
 	static void renderCloudsCalls();  
-
-	
+	static void vehicleCtorCalls(CVehicle* veh);
+	static void vehicleDtorCalls(CVehicle* veh);
+	static void objectCtorCalls(CObject* obj);
+	static void objectDtorCalls(CObject* obj);
 };
 
 
@@ -131,6 +132,12 @@ extern CEvents drawRadarEvent;
 extern CEvents drawBlipsEvent;
 extern CEvents drawRadarOverlayEvent;
 extern CEvents drawMenuEvent;
-extern CEvents vehicleRenderEvent;
 
+
+extern CEvents vehicleRenderEvent;
+extern CEvents vehicleCtorEvent;
+extern CEvents vehicleDtorEvent;
+extern CEvents objectCtorEvent;
+extern CEvents objectDtorEvent;
+extern CEvents initGameEvent;
 

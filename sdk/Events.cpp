@@ -1,20 +1,28 @@
 #include <mod/amlmod.h>
 #include <game_sa/sdk.h>
 #include <sdk/Call.h>
-
+#include "injector.h"
 #include "Events.h"
 
-CEvents renderCloudsEvent(renderClouds); 
+
+CEvents initGameEvent(initGame);
 CEvents initScriptsEvent(initScripts);
-CEvents processScriptsEvent(processScripts);
 CEvents initRwEvent(initRw);
 CEvents initPoolsEvent(initPools);
+
 CEvents pedCtorEvent(pedCtor);
 CEvents pedDtorEvent(pedDtor);
 CEvents pedRenderEvent(pedRender);
+
+CEvents objectCtorEvent(objectCtor);
+CEvents objectDtorEvent(objectDtor);
 CEvents objectRenderEvent(objectRender);
 CEvents objectPreRenderEvent(objectPreRender);
+
+CEvents processScriptsEvent(processScripts);
+CEvents renderCloudsEvent(renderClouds); 
 CEvents touchEvent(touch);
+
 CEvents drawHudEvent(drawHud);
 CEvents drawingEvent(drawing);
 CEvents drawAfterFadeEvent(drawAfterFade);
@@ -22,7 +30,11 @@ CEvents drawRadarEvent(drawRadar);
 CEvents drawBlipsEvent(drawBlips);
 CEvents drawRadarOverlayEvent(drawRadarOverlay);
 CEvents drawMenuEvent(drawMenu);
+
 CEvents vehicleRenderEvent(vehicleRender);
+CEvents vehicleCtorEvent(vehicleCtor);
+CEvents vehicleDtorEvent(vehicleDtor);
+
 
 void CEvents::pedRenderCalls(CPed* ped) {
     for(pedRenderEvent.PedPtr = pedRenderEvent.PedEvents.begin(); pedRenderEvent.PedPtr != pedRenderEvent.PedEvents.end(); ++pedRenderEvent.PedPtr){
@@ -217,8 +229,8 @@ DECL_HOOKi(renderCloudsHook) {
 }
 
 void CEvents::pedCtorCalls(CPed* ped) {
-    for(pedRenderEvent.PedPtr = pedRenderEvent.PedEvents.begin(); pedRenderEvent.PedPtr != pedRenderEvent.PedEvents.end(); ++pedRenderEvent.PedPtr){
-        EventPtrPed func = *pedRenderEvent.PedPtr;
+    for(pedCtorEvent.PedPtr = pedCtorEvent.PedEvents.begin(); pedCtorEvent.PedPtr != pedCtorEvent.PedEvents.end(); ++pedCtorEvent.PedPtr){
+        EventPtrPed func = *pedCtorEvent.PedPtr;
         func(ped);
     }
 }
@@ -229,8 +241,8 @@ DECL_HOOKv(pedCtorHook, CPed* ped) {
 }
 
 void CEvents::pedDtorCalls(CPed* ped) {
-    for(pedRenderEvent.PedPtr = pedRenderEvent.PedEvents.begin(); pedRenderEvent.PedPtr != pedRenderEvent.PedEvents.end(); ++pedRenderEvent.PedPtr){
-        EventPtrPed func = *pedRenderEvent.PedPtr;
+    for(pedDtorEvent.PedPtr = pedDtorEvent.PedEvents.begin(); pedDtorEvent.PedPtr != pedDtorEvent.PedEvents.end(); ++pedDtorEvent.PedPtr){
+        EventPtrPed func = *pedDtorEvent.PedPtr;
         func(ped);
     }
 }
@@ -240,8 +252,71 @@ DECL_HOOKv(pedDtorHook, CPed* ped) {
     pedDtorHook(ped);
 }
 
+void CEvents::vehicleCtorCalls(CVehicle* veh) {
+    for(vehicleCtorEvent.VehPtr = vehicleCtorEvent.VehEvents.begin(); vehicleCtorEvent.VehPtr !=  vehicleCtorEvent.VehEvents.end(); ++vehicleCtorEvent.VehPtr) {
+        EventPtrVeh func = *vehicleCtorEvent.VehPtr;
+        func(veh);
+    }
+}
+
+DECL_HOOKv(vehicleCtorHook, CVehicle* veh) {
+    CEvents::vehicleCtorCalls(veh);
+    vehicleCtorHook(veh);
+}
+
+void CEvents::vehicleDtorCalls(CVehicle* veh) {
+    for(vehicleDtorEvent.VehPtr = vehicleDtorEvent.VehEvents.begin(); vehicleDtorEvent.VehPtr !=  vehicleDtorEvent.VehEvents.end(); ++vehicleDtorEvent.VehPtr) {
+        EventPtrVeh func = *vehicleDtorEvent.VehPtr;
+        func(veh);
+    }
+}
+
+DECL_HOOKv(vehicleDtorHook, CVehicle* veh) {
+    CEvents::vehicleDtorCalls(veh);
+    vehicleDtorHook(veh);
+}
+
+void CEvents::initGameCalls() {
+    for(initGameEvent.actPtr = initGameEvent.events.begin(); initGameEvent.actPtr != initGameEvent.events.end(); ++initGameEvent.actPtr) {
+        EventPtr func = *initGameEvent.actPtr;
+        func();
+    }
+}
+
+DECL_HOOKv(initGameHook) {
+    CEvents::initGameCalls();
+    initGameHook();
+}
+
+void CEvents::objectCtorCalls(CObject* obj) {
+    for(objectCtorEvent.ObjPtr = objectCtorEvent.ObjEvents.begin(); objectCtorEvent.ObjPtr != objectCtorEvent.ObjEvents.end(); ++objectCtorEvent.ObjPtr) {
+        EventPtrObj func = *objectCtorEvent.ObjPtr;
+        func(obj);
+    }
+}
+
+DECL_HOOKv(objectCtorHook, CObject* obj) {
+    CEvents::objectCtorCalls(obj);
+    objectCtorHook(obj);
+}
+
+void CEvents::objectDtorCalls(CObject* obj) {
+    for(objectDtorEvent.ObjPtr = objectDtorEvent.ObjEvents.begin(); objectDtorEvent.ObjPtr != objectDtorEvent.ObjEvents.end(); ++objectDtorEvent.ObjPtr) {
+        EventPtrObj func = *objectDtorEvent.ObjPtr;
+        func(obj);
+    }
+}
+
+DECL_HOOKv(objectDtorHook, CObject* obj) {
+    CEvents::objectDtorCalls(obj);
+    objectDtorHook(obj);
+}
+
 CEvents::CEvents(EventsType type) {
     switch(type){
+        case initGame:
+            HOOKBLX(initGameHook, GetSym("_Z11DoGameStatev") + 0x226);
+            break;
         case drawBlips:
             HOOKPLT(drawBlipsHook, 0x66E910 + libs.pGame);
             break;
@@ -256,6 +331,16 @@ CEvents::CEvents(EventsType type) {
             break;
         case objectRender:
             HOOKBLX(objectRenderHook, GetSym("_ZN7CObject6RenderEv") + 0x6A);
+            break;
+        case objectCtor:
+            HOOKBLX(objectCtorHook, GetSym("_ZN7CObjectC2Ev") + 0x6);
+            HOOKBLX(objectCtorHook, GetSym("_ZN7CObjectC2Eib") + 0xE);
+            HOOKBLX(objectCtorHook, GetSym("_ZN7CObjectC2EP12CDummyObject") + 0xC);
+            HOOKBLX(objectCtorHook, GetSym("_ZN7CObject6CreateEib") + 0x62);
+            HOOKBLX(objectCtorHook, GetSym("_ZN7CObject6CreateEib") + 0x158);
+            break;
+        case objectDtor:
+            HOOKB(objectDtorHook, GetSym("_ZN7CObjectD2Ev") + 0x198);
             break;
         case drawMenu:
             HOOKPLT(drawMenuHook, 0x674254 + libs.pGame);
@@ -277,6 +362,12 @@ CEvents::CEvents(EventsType type) {
             break;
         case vehicleRender:
             HOOKB(vehicleRenderHook, GetSym("_ZN8CVehicle6RenderEv") + 0xE6);
+            break;
+        case vehicleCtor:
+            HOOKBLX(vehicleCtorHook, GetSym("_ZN8CVehicleC2Eh") + 0xC);
+            break;
+        case vehicleDtor:
+            HOOKB(vehicleDtorHook, GetSym("_ZN8CVehicleD2Ev") + 0x20C);
             break;
         case processScripts:
             HOOKPLT(processScriptsHook, 0x672AAC + libs.pGame);
