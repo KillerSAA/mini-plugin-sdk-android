@@ -52,7 +52,7 @@ struct CFont
 
     // funcs //
     static void Initialise();
-        // CFont closing
+    // CFont closing
     static void Shutdown();
     // this adds a single character into rendering buffer
     static void PrintChar(float x, float y, char character);
