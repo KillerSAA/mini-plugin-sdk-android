@@ -63,9 +63,9 @@ public:
 	CEvents(EventsType type);
 
 	// arguments
-    void operator+=(EventPtr p) {
-        events.push_back(p);
-    }
+    	void operator+=(EventPtr p) {
+        	events.push_back(p);
+    	}
 	void operator+=(EventPtrPed p) {
 		PedEvents.push_back(p);
 	}
@@ -125,8 +125,6 @@ extern CEvents drawRadarEvent;
 extern CEvents drawBlipsEvent;
 extern CEvents drawRadarOverlayEvent;
 extern CEvents drawMenuEvent;
-
-// new events
 extern CEvents vehicleRenderEvent;
 
 
