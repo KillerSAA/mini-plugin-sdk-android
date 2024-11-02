@@ -1,5 +1,6 @@
 #pragma once 
 #include <vector>
+#include <functional>
 #include <game_sa/CPed.h>
 #include <game_sa/CObject.h>
 #include <game_sa/eNVTouchEventType.h>
