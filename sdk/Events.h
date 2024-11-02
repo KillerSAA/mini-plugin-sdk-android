@@ -4,6 +4,12 @@
 #include <game_sa/CObject.h>
 #include <game_sa/eNVTouchEventType.h>
 
+/*
+example:
+pedRenderEvent += [](CPed* ped) {
+            
+};
+*/
 enum EventsType {
 	drawHud, //_ZN4CHud4DrawEv
 	drawing, //_ZN9CPopCycle7DisplayEv
