@@ -52,7 +52,7 @@ struct CFont
 
     // funcs //
     static void Initialise();
-    // CFont closing
+        // CFont closing
     static void Shutdown();
     // this adds a single character into rendering buffer
     static void PrintChar(float x, float y, char character);
@@ -62,9 +62,6 @@ struct CFont
     static char *ParseToken(char *text, CRGBA & color, bool isBlip, char *tag);
     // text scaling
     static void SetScale(float fHeight);
-    // Making the font scaling function the same as the PC version - (I don't know what to name it LOL)
-    static void SetScale2(float fWidth, float fHeight);
-
     // text scaling depends on current language
     //static void SetScaleForCurrentlanguage(float w, float h);  doesn't exist on sa mobile?
 
