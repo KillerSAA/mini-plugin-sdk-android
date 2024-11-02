@@ -1,7 +1,7 @@
 #include <mod/amlmod.h>
 #include <game_sa/sdk.h>
 #include <sdk/Call.h>
-#include "injector.h"
+
 #include "Events.h"
 
 
