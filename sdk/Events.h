@@ -6,6 +6,8 @@
 #include <game_sa/eNVTouchEventType.h>
 #include <game_sa/CWidget.h>
 
+///////////// continuation of CEvents from Xmds /////////////
+
 enum EventsType {
 	drawHud, //_ZN4CHud4DrawEv
 	drawing, //_ZN9CPopCycle7DisplayEv
