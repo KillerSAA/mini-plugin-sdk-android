@@ -39,127 +39,220 @@ CEvents updateWidgetsEvent(updateWidgets);
 
 #define callFuncs(_eventPtr, _eventsList, _funcType, ...) for(_eventPtr = _eventsList.begin(); _eventPtr != _eventsList.end(); ++_eventPtr){ _funcType func = *_eventPtr; func(__VA_ARGS__);}
 
-DECL_HOOKv(PedRenderHook, CPed* ped) {
+void CEvents::pedRenderCalls(CPed* ped) {
     callFuncs(pedRenderEvent.PedPtr, pedRenderEvent.PedEvents, EventPtrPed, ped)
+}
+
+DECL_HOOKv(PedRenderHook, CPed* ped) {
     PedRenderHook(ped);
 }
 
+void CEvents::drawingCalls() {
+    callFuncs(drawingEvent.actPtr, drawingEvent.events, EventPtr);
+}
+
 DECL_HOOKv(drawingHook) {
-    callFuncs(drawingEvent.actPtr, drawingEvent.events, EventPtr, );
+    CEvents::drawingCalls();
     drawingHook();
 }
 
+void CEvents::drawAfterFadeCalls() {
+    callFuncs(drawAfterFadeEvent.actPtr, drawAfterFadeEvent.events, EventPtr);
+}
+
 DECL_HOOKv(drawAfterFadeHook) {
-    callFuncs(drawAfterFadeEvent.actPtr, drawAfterFadeEvent.events, EventPtr, );
+    CEvents::drawAfterFadeCalls();
     drawAfterFadeHook();
 }
 
-DECL_HOOKv(vehicleRenderHook, CVehicle* veh) {
+void CEvents::vehicleRenderCalls(CVehicle* veh) {
     callFuncs(vehicleRenderEvent.VehPtr, vehicleRenderEvent.VehEvents, EventPtrVeh, veh);
+}
+
+DECL_HOOKv(vehicleRenderHook, CVehicle* veh) {
+    CEvents::vehicleRenderCalls(veh);
     vehicleRenderHook(veh);
 }
 
-DECL_HOOKp(drawBlipsHook, float size) {
+void CEvents::drawBlipsCalls(float size) {
     callFuncs(drawBlipsEvent.blipsPtr, drawBlipsEvent.blipsEvents, EventPtrBlips, size);
+}
+
+DECL_HOOKp(drawBlipsHook, float size) {
+    CEvents::drawBlipsCalls(size);
     return drawBlipsHook(size);
 }
 
-DECL_HOOKv(objectPreRenderHook, CObject* obj) {
+void CEvents::objectPreRenderCalls(CObject* obj) {
     callFuncs(objectPreRenderEvent.ObjPtr, objectPreRenderEvent.ObjEvents, EventPtrObj, obj);
+}
+
+DECL_HOOKv(objectPreRenderHook, CObject* obj) {
+    CEvents::objectPreRenderCalls(obj);
     objectPreRenderHook(obj);
 }
 
-DECL_HOOKv(objectRenderHook, CObject* obj) {
+void CEvents::objectRenderCalls(CObject* obj) {
     callFuncs(objectRenderEvent.ObjPtr, objectRenderEvent.ObjEvents, EventPtrObj, obj);
+}
+
+DECL_HOOKv(objectRenderHook, CObject* obj) {
+    CEvents::objectRenderCalls(obj);
     objectRenderHook(obj);
 }
 
+void CEvents::initRwCalls() {
+    callFuncs(initRwEvent.actPtr, initRwEvent.events, EventPtr);
+}
+
 DECL_HOOKi(initRwHook) {
-    callFuncs(initRwEvent.actPtr, initRwEvent.events, EventPtr, );
+    CEvents::initRwCalls();
     return initRwHook();
 }
 
+void CEvents::initPoolsCalls() {
+    callFuncs(initPoolsEvent.actPtr, initPoolsEvent.events, EventPtr);
+}
+
 DECL_HOOKi(initPoolsHook) {
-    callFuncs(initPoolsEvent.actPtr, initPoolsEvent.events, EventPtr, );
+    CEvents::initPoolsCalls();
     return initPoolsHook();
 }
 
-DECL_HOOKv(drawMenuHook, void* gMobileMenu) {
+void CEvents::drawMenuCalls(void* gMobileMenu) {
     callFuncs(drawMenuEvent.mobMenuPtr, drawMenuEvent.mobMenuEvents, EventPtrMob, gMobileMenu);
+}
+
+DECL_HOOKv(drawMenuHook, void* gMobileMenu) {
+    CEvents::drawMenuCalls(gMobileMenu);
     drawMenuHook(gMobileMenu);
 }
 
+void CEvents::drawRadarCalls() {
+    callFuncs(drawRadarEvent.actPtr, drawRadarEvent.events, EventPtr);
+}
+
 DECL_HOOKi(drawRadarHook) {
-    callFuncs(drawRadarEvent.actPtr, drawRadarEvent.events, EventPtr, );
+    CEvents::drawRadarCalls();
     return drawRadarHook();
 }
 
-DECL_HOOKv(drawRadarOverlayHook, bool inMenu) {
+void CEvents::drawRadarOverlayCalls(bool inMenu) {
     callFuncs(drawRadarOverlayEvent.radarPtr, drawRadarOverlayEvent.radarEvents, EventPtrRadarOv, inMenu);
+}
+
+DECL_HOOKv(drawRadarOverlayHook, bool inMenu) {
+    CEvents::drawRadarOverlayCalls(inMenu);
     drawRadarOverlayHook(inMenu);
 }
 
+void CEvents::processScriptsCalls() {
+    callFuncs(processScriptsEvent.actPtr, processScriptsEvent.events, EventPtr);
+}
+
 DECL_HOOKv(processScriptsHook) {
-    callFuncs(processScriptsEvent.actPtr, processScriptsEvent.events, EventPtr, );
+    CEvents::processScriptsCalls();
     processScriptsHook();
 }
 
-DECL_HOOKv(touchHook, NVTouchEventType actionType, int trackNum, int x, int y) {
+void CEvents::touchCalls(NVTouchEventType actionType, int trackNum, int x, int y) {
     callFuncs(touchEvent.TouchPtr, touchEvent.TouchEvents, EventPtrTouch, actionType, trackNum, x, y);
+}
+
+DECL_HOOKv(touchHook, NVTouchEventType actionType, int trackNum, int x, int y) {
+    CEvents::touchCalls(actionType, trackNum, x, y);
     touchHook(actionType, trackNum, x, y);
 }
 
+void CEvents::initScriptsCalls() {
+    callFuncs(initScriptsEvent.actPtr, initScriptsEvent.events, EventPtr);
+}
+
 DECL_HOOKi(initScriptsHook) {
-    callFuncs(initScriptsEvent.actPtr, initScriptsEvent.events, EventPtr, );
+    CEvents::initScriptsCalls();
     return initScriptsHook();
 }
 
+void CEvents::renderCloudsCalls() {
+    callFuncs(renderCloudsEvent.actPtr, renderCloudsEvent.events, EventPtr);
+}
+
 DECL_HOOKi(renderCloudsHook) {
-    callFuncs(renderCloudsEvent.actPtr, renderCloudsEvent.events, EventPtr, );
+    CEvents::renderCloudsCalls();
     return renderCloudsHook();
 }
 
-DECL_HOOKv(pedCtorHook, CPed* ped) {
+void CEvents::pedCtorCalls(CPed* ped) {
     callFuncs(pedCtorEvent.PedPtr, pedCtorEvent.PedEvents, EventPtrPed, ped);
+}
+
+DECL_HOOKv(pedCtorHook, CPed* ped) {
+    CEvents::pedCtorCalls(ped);
     pedCtorHook(ped);
 }
 
-DECL_HOOKv(pedDtorHook, CPed* ped) {
+void CEvents::pedDtorCalls(CPed* ped) {
     callFuncs(pedDtorEvent.PedPtr, pedDtorEvent.PedEvents, EventPtrPed, ped);
+}
+
+DECL_HOOKv(pedDtorHook, CPed* ped) {
+    CEvents::pedDtorCalls(ped);
     pedDtorHook(ped);
 }
 
-DECL_HOOKv(vehicleCtorHook, CVehicle* veh) {
+void CEvents::vehicleCtorCalls(CVehicle* veh) {
     callFuncs(vehicleCtorEvent.VehPtr, vehicleCtorEvent.VehEvents, EventPtrVeh, veh);
+}
+
+DECL_HOOKv(vehicleCtorHook, CVehicle* veh) {
+    CEvents::vehicleCtorCalls(veh);
     vehicleCtorHook(veh);
 }
 
-DECL_HOOKv(vehicleDtorHook, CVehicle* veh) {
+void CEvents::vehicleDtorCalls(CVehicle* veh) {
     callFuncs(vehicleDtorEvent.VehPtr, vehicleDtorEvent.VehEvents, EventPtrVeh, veh);
+}
+
+DECL_HOOKv(vehicleDtorHook, CVehicle* veh) {
+    CEvents::vehicleDtorCalls(veh);
     vehicleDtorHook(veh);
 }
 
+void CEvents::initGameCalls() {
+    callFuncs(initGameEvent.actPtr, initGameEvent.events, EventPtr);
+}
+
 DECL_HOOKv(initGameHook) {
-    callFuncs(initGameEvent.actPtr, initGameEvent.events, EventPtr, );
+    CEvents::initGameCalls();
     initGameHook();
 }
 
-DECL_HOOKv(objectCtorHook, CObject* obj) {
+void CEvents::objectCtorCalls(CObject* obj) {
     callFuncs(objectCtorEvent.ObjPtr, objectCtorEvent.ObjEvents, EventPtrObj, obj);
+}
+
+DECL_HOOKv(objectCtorHook, CObject* obj) {
+    CEvents::objectCtorCalls(obj);
     objectCtorHook(obj);
 }
 
-DECL_HOOKv(objectDtorHook, CObject* obj) {
+void CEvents::objectDtorCalls(CObject* obj) {
     callFuncs(objectDtorEvent.ObjPtr, objectDtorEvent.ObjEvents, EventPtrObj, obj);
+}
+
+DECL_HOOKv(objectDtorHook, CObject* obj) {
+    CEvents::objectDtorCalls(obj);
     objectDtorHook(obj);
 }
 
-DECL_HOOKi(updateWidgetsHook, CWidget* w) {
+void CEvents::updateWidgetCalls(CWidget* w) {
     callFuncs(updateWidgetsEvent.widgetPtr, updateWidgetsEvent.widgetEvents, EventPtrWidget, w);
-    return updateWidgetsHook(w);
 }
 
-
+DECL_HOOKi(updateWidgetsHook, CWidget* w) {
+    CEvents::updateWidgetCalls(w);
+    return updateWidgetsHook(w);
+}
 
 CEvents::CEvents(EventsType type) {
     eventType = type;

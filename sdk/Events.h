@@ -7,6 +7,8 @@
 
 #include "EventsList.h"
 
+#define addArgs(_func, _eventType) void operator+=(_func p) { _eventType.push_back(p); }
+
 enum EventsType {
 	drawHud, //_ZN4CHud4DrawEv
 	drawing, //_ZN9CPopCycle7DisplayEv
@@ -33,7 +35,7 @@ enum EventsType {
 	initScripts, // _ZN11CTheScripts4InitEv
 	renderClouds, // _ZN7CClouds6RenderEv
 	initGame, // _Z14InitialiseGamev   BLX InitialiseGame(void)
-   
+	afterWidgetsCreated,
 	updateWidgets 
 };
 
@@ -56,9 +58,41 @@ public:
 	EventsType eventType;
 
 	// arguments
-	void operator+=(EventPtr p) {
-		events.push_back(p);
-    	}
+	addArgs(EventPtr, events)
+	addArgs(EventPtrPed, PedEvents)
+	addArgs(EventPtrObj, ObjEvents)
+	addArgs(EventPtrVeh, VehEvents)
+	addArgs(EventPtrTouch, TouchEvents)
+	addArgs(EventPtrBlips, blipsEvents)
+	addArgs(EventPtrWidget, widgetEvents)
+
+	static void initRwCalls();
+	static void initPoolsCalls();
+	static void initGameCalls();
+	static void pedCtorCalls(CPed* ped);
+	static void pedDtorCalls(CPed* ped);
+	static void pedRenderCalls(CPed* ped);
+	static void objectRenderCalls(CObject* obj);
+	static void vehicleRenderCalls(CVehicle* veh);
+	static void objectPreRenderCalls(CObject* obj);
+	static void touchCalls(NVTouchEventType actionType, int trackNum, int x, int y);
+	static void drawHudCalls();
+	static void drawingCalls();
+	static void drawAfterFadeCalls();
+	static void drawRadarCalls();
+	static void drawBlipsCalls(float size);
+	static void drawRadarOverlayCalls(bool inMenu);
+	static void drawMenuCalls(void* gMobileMenu);
+	static void processScriptsCalls();
+	static void initScriptsCalls();
+	static void renderCloudsCalls();  
+	static void vehicleCtorCalls(CVehicle* veh);
+	static void vehicleDtorCalls(CVehicle* veh);
+	static void objectCtorCalls(CObject* obj);
+	static void objectDtorCalls(CObject* obj);
+
+	// new events
+	static void updateWidgetCalls(CWidget* w);
 };
 
 
