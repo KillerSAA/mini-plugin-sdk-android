@@ -4,6 +4,7 @@
 #include <game_sa/CPed.h>
 #include <game_sa/CObject.h>
 #include <game_sa/eNVTouchEventType.h>
+#include <game_sa/CWidget.h>
 
 enum EventsType {
 	drawHud, //_ZN4CHud4DrawEv
@@ -30,7 +31,9 @@ enum EventsType {
 	processScripts, // _ZN7CCranes12UpdateCranesEv
 	initScripts, // _ZN11CTheScripts4InitEv
 	renderClouds, // _ZN7CClouds6RenderEv
-	initGame // _Z14InitialiseGamev   BLX InitialiseGame(void)
+	initGame, // _Z14InitialiseGamev   BLX InitialiseGame(void)
+   
+	updateWidgets 
 };
 
 using EventPtr = std::function<void()>;
@@ -41,6 +44,7 @@ using EventPtrBlips = std::function<void(float)>;
 using EventPtrRadarOv = std::function<void(bool)>;
 using EventPtrMob = std::function<void(void*)>;
 using EventPtrTouch = std::function<void(int, int, int, int)>;
+using EventPtrWidget = std::function<void(CWidget*)>;
 
 class EventsList {
 public:
@@ -51,6 +55,7 @@ public:
 	std::vector<EventPtrBlips> blipsEvents;
 	std::vector<EventPtrTouch> TouchEvents;
 	std::vector<EventPtrRadarOv> radarEvents;
+	std::vector<EventPtrWidget> widgetEvents;
 	std::vector<EventPtrMob> mobMenuEvents;
 
 	std::vector<EventPtr>::iterator actPtr;
@@ -60,6 +65,7 @@ public:
 	std::vector<EventPtrBlips>::iterator blipsPtr;
 	std::vector<EventPtrTouch>::iterator TouchPtr;
 	std::vector<EventPtrRadarOv>::iterator radarPtr;
+	std::vector<EventPtrWidget>::iterator widgetPtr;
 	std::vector<EventPtrMob>::iterator mobMenuPtr;
 };
 
@@ -85,6 +91,9 @@ public:
 	}
 	void operator+=(EventPtrBlips p) {
 		blipsEvents.push_back(p);
+	}
+	void operator+=(EventPtrWidget p) {
+		widgetEvents.push_back(p);
 	}
 
 // funcs
@@ -112,6 +121,9 @@ public:
 	static void vehicleDtorCalls(CVehicle* veh);
 	static void objectCtorCalls(CObject* obj);
 	static void objectDtorCalls(CObject* obj);
+
+	// new events
+	static void updateWidgetCalls(CWidget* w);
 };
 
 
@@ -133,8 +145,6 @@ extern CEvents drawRadarEvent;
 extern CEvents drawBlipsEvent;
 extern CEvents drawRadarOverlayEvent;
 extern CEvents drawMenuEvent;
-
-
 extern CEvents vehicleRenderEvent;
 extern CEvents vehicleCtorEvent;
 extern CEvents vehicleDtorEvent;
@@ -142,3 +152,5 @@ extern CEvents objectCtorEvent;
 extern CEvents objectDtorEvent;
 extern CEvents initGameEvent;
 
+// new events
+extern CEvents updateWidgetsEvent;

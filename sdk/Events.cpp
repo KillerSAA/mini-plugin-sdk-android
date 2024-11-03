@@ -1,7 +1,7 @@
 #include <mod/amlmod.h>
 #include <game_sa/sdk.h>
 #include <sdk/Call.h>
-
+#include "injector.h"
 #include "Events.h"
 
 
@@ -35,6 +35,8 @@ CEvents vehicleRenderEvent(vehicleRender);
 CEvents vehicleCtorEvent(vehicleCtor);
 CEvents vehicleDtorEvent(vehicleDtor);
 
+// new events
+CEvents updateWidgetsEvent(updateWidgets);
 
 void CEvents::pedRenderCalls(CPed* ped) {
     for(pedRenderEvent.PedPtr = pedRenderEvent.PedEvents.begin(); pedRenderEvent.PedPtr != pedRenderEvent.PedEvents.end(); ++pedRenderEvent.PedPtr){
@@ -312,8 +314,23 @@ DECL_HOOKv(objectDtorHook, CObject* obj) {
     objectDtorHook(obj);
 }
 
+void CEvents::updateWidgetCalls(CWidget* w) {
+    for(updateWidgetsEvent.widgetPtr = updateWidgetsEvent.widgetEvents.begin(); updateWidgetsEvent.widgetPtr != updateWidgetsEvent.widgetEvents.end(); ++updateWidgetsEvent.widgetPtr) {
+        EventPtrWidget func = *updateWidgetsEvent.widgetPtr;
+        func(w);
+    }
+}
+
+DECL_HOOKi(updateWidgetsHook, CWidget* w) {
+    CEvents::updateWidgetCalls(w);
+    return updateWidgetsHook(w);
+}
+
 CEvents::CEvents(EventsType type) {
     switch(type){
+        case updateWidgets:
+            HOOKPLT(updateWidgetsHook, 0x66FBCC + libs.pGame);
+            break;
         case initGame:
             HOOKBLX(initGameHook, GetSym("_Z11DoGameStatev") + 0x226);
             break;
