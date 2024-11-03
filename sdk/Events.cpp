@@ -4,7 +4,6 @@
 #include "injector.h"
 #include "Events.h"
 
-///////////// continuation of CEvents from Xmds /////////////
 
 CEvents initGameEvent(initGame);
 CEvents initScriptsEvent(initScripts);
@@ -39,295 +38,133 @@ CEvents vehicleDtorEvent(vehicleDtor);
 // new events
 CEvents updateWidgetsEvent(updateWidgets);
 
-void CEvents::pedRenderCalls(CPed* ped) {
-    for(pedRenderEvent.PedPtr = pedRenderEvent.PedEvents.begin(); pedRenderEvent.PedPtr != pedRenderEvent.PedEvents.end(); ++pedRenderEvent.PedPtr){
-        EventPtrPed func = *pedRenderEvent.PedPtr;
-        func(ped);
-    }
-}
+#define callFuncs(_eventPtr, _eventsList, _funcType, ...) for(_eventPtr = _eventsList.begin(); _eventPtr != _eventsList.end(); ++_eventPtr){ _funcType func = *_eventPtr; func(__VA_ARGS__);}
 
 DECL_HOOKv(PedRenderHook, CPed* ped) {
-    CEvents::pedRenderCalls(ped);
+    callFuncs(pedRenderEvent.PedPtr, pedRenderEvent.PedEvents, EventPtrPed, ped)
+    
     PedRenderHook(ped);
 }
 
-void CEvents::drawingCalls(){
-    for(drawingEvent.actPtr = drawingEvent.events.begin(); drawingEvent.actPtr != drawingEvent.events.end(); ++drawingEvent.actPtr) {
-        EventPtr func = *drawingEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKv(drawingHook) {
-    CEvents::drawingCalls();
+    callFuncs(drawingEvent.actPtr, drawingEvent.events, EventPtr, );
     drawingHook();
 }
 
-void CEvents::drawAfterFadeCalls() {
-    for(drawAfterFadeEvent.actPtr = drawAfterFadeEvent.events.begin(); drawAfterFadeEvent.actPtr != drawAfterFadeEvent.events.end(); ++drawAfterFadeEvent.actPtr) {
-        EventPtr func = *drawAfterFadeEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKv(drawAfterFadeHook) {
-    CEvents::drawAfterFadeCalls();
+    callFuncs(drawAfterFadeEvent.actPtr, drawAfterFadeEvent.events, EventPtr, );
     drawAfterFadeHook();
 }
 
-void CEvents::vehicleRenderCalls(CVehicle* veh) {
-    for(vehicleRenderEvent.VehPtr = vehicleRenderEvent.VehEvents.begin(); vehicleRenderEvent.VehPtr !=  vehicleRenderEvent.VehEvents.end(); ++vehicleRenderEvent.VehPtr) {
-        EventPtrVeh func = *vehicleRenderEvent.VehPtr;
-        func(veh);
-    }
-}
-
 DECL_HOOKv(vehicleRenderHook, CVehicle* veh) {
-    CEvents::vehicleRenderCalls(veh);
+    callFuncs(vehicleRenderEvent.VehPtr, vehicleRenderEvent.VehEvents, EventPtrVeh, veh);
     vehicleRenderHook(veh);
 }
 
-void CEvents::drawBlipsCalls(float size) {
-    for(drawBlipsEvent.blipsPtr = drawBlipsEvent.blipsEvents.begin(); drawBlipsEvent.blipsPtr != drawBlipsEvent.blipsEvents.end(); ++drawBlipsEvent.blipsPtr) {
-        EventPtrBlips func = *drawBlipsEvent.blipsPtr;
-        func(size);
-    }
-}
-
 DECL_HOOKp(drawBlipsHook, float size) {
-    CEvents::drawBlipsCalls(size);
+    callFuncs(drawBlipsEvent.blipsPtr, drawBlipsEvent.blipsEvents, EventPtrBlips, size);
     return drawBlipsHook(size);
 }
 
-void CEvents::objectPreRenderCalls(CObject* obj) {
-    for(objectPreRenderEvent.ObjPtr = objectPreRenderEvent.ObjEvents.begin(); objectPreRenderEvent.ObjPtr != objectPreRenderEvent.ObjEvents.end(); ++objectPreRenderEvent.ObjPtr) {
-        EventPtrObj func = *objectPreRenderEvent.ObjPtr;
-        func(obj);
-    }
-}
-
 DECL_HOOKv(objectPreRenderHook, CObject* obj) {
-    CEvents::objectPreRenderCalls(obj);
+    callFuncs(objectPreRenderEvent.ObjPtr, objectPreRenderEvent.ObjEvents, EventPtrObj, obj);
     objectPreRenderHook(obj);
 }
 
-void CEvents::objectRenderCalls(CObject* obj) {
-    for(objectRenderEvent.ObjPtr = objectRenderEvent.ObjEvents.begin(); objectRenderEvent.ObjPtr != objectRenderEvent.ObjEvents.end(); ++objectRenderEvent.ObjPtr) {
-        EventPtrObj func = *objectRenderEvent.ObjPtr;
-        func(obj);
-    }
-}
-
 DECL_HOOKv(objectRenderHook, CObject* obj) {
-    CEvents::objectRenderCalls(obj);
+    callFuncs(objectRenderEvent.ObjPtr, objectRenderEvent.ObjEvents, EventPtrObj, obj);
     objectRenderHook(obj);
 }
 
-void CEvents::initRwCalls() {
-    for(initRwEvent.actPtr = initRwEvent.events.begin(); initRwEvent.actPtr != initRwEvent.events.end(); ++initRwEvent.actPtr) {
-        EventPtr func = *initRwEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKi(initRwHook) {
-    CEvents::initRwCalls();
+    callFuncs(initRwEvent.actPtr, initRwEvent.events, EventPtr, );
     return initRwHook();
 }
 
-void CEvents::initPoolsCalls() {
-    for(initPoolsEvent.actPtr = initPoolsEvent.events.begin(); initPoolsEvent.actPtr != initPoolsEvent.events.end(); ++initPoolsEvent.actPtr) {
-        EventPtr func = *initPoolsEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKi(initPoolsHook) {
-    CEvents::initPoolsCalls();
+    callFuncs(initPoolsEvent.actPtr, initPoolsEvent.events, EventPtr, );
     return initPoolsHook();
 }
 
-void CEvents::drawMenuCalls(void* gMobileMenu) {
-    for(drawMenuEvent.mobMenuPtr = drawMenuEvent.mobMenuEvents.begin(); drawMenuEvent.mobMenuPtr != drawMenuEvent.mobMenuEvents.end(); ++drawMenuEvent.mobMenuPtr) {
-        EventPtrMob func = *drawMenuEvent.mobMenuPtr;
-        func(gMobileMenu);
-    }
-}
-
 DECL_HOOKv(drawMenuHook, void* gMobileMenu) {
-    CEvents::drawMenuCalls(gMobileMenu);
+    callFuncs(drawMenuEvent.mobMenuPtr, drawMenuEvent.mobMenuEvents, EventPtrMob, gMobileMenu);
     drawMenuHook(gMobileMenu);
 }
 
-void CEvents::drawRadarCalls() {
-    for(drawRadarEvent.actPtr = drawRadarEvent.events.begin(); drawRadarEvent.actPtr != drawRadarEvent.events.end(); ++drawRadarEvent.actPtr) {
-        EventPtr func = *drawRadarEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKi(drawRadarHook) {
-    CEvents::drawRadarCalls();
+    callFuncs(drawRadarEvent.actPtr, drawRadarEvent.events, EventPtr, );
     return drawRadarHook();
 }
 
-void CEvents::drawRadarOverlayCalls(bool inMenu) {
-    for(drawRadarOverlayEvent.radarPtr = drawRadarOverlayEvent.radarEvents.begin(); drawRadarOverlayEvent.radarPtr != drawRadarOverlayEvent.radarEvents.end(); ++drawRadarOverlayEvent.radarPtr) {
-        EventPtrRadarOv func = *drawRadarOverlayEvent.radarPtr;
-        func(inMenu);
-    }
-}
-
 DECL_HOOKv(drawRadarOverlayHook, bool inMenu) {
-    CEvents::drawRadarOverlayCalls(inMenu);
+    callFuncs(drawRadarOverlayEvent.radarPtr, drawRadarOverlayEvent.radarEvents, EventPtrRadarOv, inMenu);
     drawRadarOverlayHook(inMenu);
 }
 
-void CEvents::processScriptsCalls() {
-    for(processScriptsEvent.actPtr = processScriptsEvent.events.begin(); processScriptsEvent.actPtr != processScriptsEvent.events.end(); ++processScriptsEvent.actPtr) {
-        EventPtr func = *processScriptsEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKv(processScriptsHook) {
-    CEvents::processScriptsCalls();
+    callFuncs(processScriptsEvent.actPtr, processScriptsEvent.events, EventPtr, );
     processScriptsHook();
 }
 
-void CEvents::touchCalls(NVTouchEventType actionType, int trackNum, int x, int y) {
-    for(touchEvent.TouchPtr = touchEvent.TouchEvents.begin(); touchEvent.TouchPtr != touchEvent.TouchEvents.end(); ++touchEvent.TouchPtr) {
-        EventPtrTouch func = *touchEvent.TouchPtr;
-        func(actionType, trackNum, x, y);
-    }
-}
-
 DECL_HOOKv(touchHook, NVTouchEventType actionType, int trackNum, int x, int y) {
-    CEvents::touchCalls(actionType, trackNum, x, y);
+    callFuncs(touchEvent.TouchPtr, touchEvent.TouchEvents, EventPtrTouch, actionType, trackNum, x, y);
     touchHook(actionType, trackNum, x, y);
 }
 
-void CEvents::initScriptsCalls() {
-    for(initScriptsEvent.actPtr = initScriptsEvent.events.begin(); initScriptsEvent.actPtr != initScriptsEvent.events.end(); ++initScriptsEvent.actPtr) {
-        EventPtr func = *initScriptsEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKi(initScriptsHook) {
-    CEvents::initScriptsCalls();
+    callFuncs(initScriptsEvent.actPtr, initScriptsEvent.events, EventPtr, );
     return initScriptsHook();
 }
 
-void CEvents::renderCloudsCalls() {
-    for(renderCloudsEvent.actPtr = renderCloudsEvent.events.begin(); renderCloudsEvent.actPtr != renderCloudsEvent.events.end(); ++renderCloudsEvent.actPtr) {
-        EventPtr func = *renderCloudsEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKi(renderCloudsHook) {
-    CEvents::renderCloudsCalls();
+    callFuncs(renderCloudsEvent.actPtr, renderCloudsEvent.events, EventPtr, );
     return renderCloudsHook();
 }
 
-void CEvents::pedCtorCalls(CPed* ped) {
-    for(pedCtorEvent.PedPtr = pedCtorEvent.PedEvents.begin(); pedCtorEvent.PedPtr != pedCtorEvent.PedEvents.end(); ++pedCtorEvent.PedPtr){
-        EventPtrPed func = *pedCtorEvent.PedPtr;
-        func(ped);
-    }
-}
-
 DECL_HOOKv(pedCtorHook, CPed* ped) {
-    CEvents::pedCtorCalls(ped);
+    callFuncs(pedCtorEvent.PedPtr, pedCtorEvent.PedEvents, EventPtrPed, ped);
     pedCtorHook(ped);
 }
 
-void CEvents::pedDtorCalls(CPed* ped) {
-    for(pedDtorEvent.PedPtr = pedDtorEvent.PedEvents.begin(); pedDtorEvent.PedPtr != pedDtorEvent.PedEvents.end(); ++pedDtorEvent.PedPtr){
-        EventPtrPed func = *pedDtorEvent.PedPtr;
-        func(ped);
-    }
-}
-
 DECL_HOOKv(pedDtorHook, CPed* ped) {
-    CEvents::pedDtorCalls(ped);
+    callFuncs(pedDtorEvent.PedPtr, pedDtorEvent.PedEvents, EventPtrPed, ped);
     pedDtorHook(ped);
 }
 
-void CEvents::vehicleCtorCalls(CVehicle* veh) {
-    for(vehicleCtorEvent.VehPtr = vehicleCtorEvent.VehEvents.begin(); vehicleCtorEvent.VehPtr !=  vehicleCtorEvent.VehEvents.end(); ++vehicleCtorEvent.VehPtr) {
-        EventPtrVeh func = *vehicleCtorEvent.VehPtr;
-        func(veh);
-    }
-}
-
 DECL_HOOKv(vehicleCtorHook, CVehicle* veh) {
-    CEvents::vehicleCtorCalls(veh);
+    callFuncs(vehicleCtorEvent.VehPtr, vehicleCtorEvent.VehEvents, EventPtrVeh, veh);
     vehicleCtorHook(veh);
 }
 
-void CEvents::vehicleDtorCalls(CVehicle* veh) {
-    for(vehicleDtorEvent.VehPtr = vehicleDtorEvent.VehEvents.begin(); vehicleDtorEvent.VehPtr !=  vehicleDtorEvent.VehEvents.end(); ++vehicleDtorEvent.VehPtr) {
-        EventPtrVeh func = *vehicleDtorEvent.VehPtr;
-        func(veh);
-    }
-}
-
 DECL_HOOKv(vehicleDtorHook, CVehicle* veh) {
-    CEvents::vehicleDtorCalls(veh);
+    callFuncs(vehicleDtorEvent.VehPtr, vehicleDtorEvent.VehEvents, EventPtrVeh, veh);
     vehicleDtorHook(veh);
 }
 
-void CEvents::initGameCalls() {
-    for(initGameEvent.actPtr = initGameEvent.events.begin(); initGameEvent.actPtr != initGameEvent.events.end(); ++initGameEvent.actPtr) {
-        EventPtr func = *initGameEvent.actPtr;
-        func();
-    }
-}
-
 DECL_HOOKv(initGameHook) {
-    CEvents::initGameCalls();
+    callFuncs(initGameEvent.actPtr, initGameEvent.events, EventPtr, );
     initGameHook();
 }
 
-void CEvents::objectCtorCalls(CObject* obj) {
-    for(objectCtorEvent.ObjPtr = objectCtorEvent.ObjEvents.begin(); objectCtorEvent.ObjPtr != objectCtorEvent.ObjEvents.end(); ++objectCtorEvent.ObjPtr) {
-        EventPtrObj func = *objectCtorEvent.ObjPtr;
-        func(obj);
-    }
-}
-
 DECL_HOOKv(objectCtorHook, CObject* obj) {
-    CEvents::objectCtorCalls(obj);
+    callFuncs(objectCtorEvent.ObjPtr, objectCtorEvent.ObjEvents, EventPtrObj, obj);
     objectCtorHook(obj);
 }
 
-void CEvents::objectDtorCalls(CObject* obj) {
-    for(objectDtorEvent.ObjPtr = objectDtorEvent.ObjEvents.begin(); objectDtorEvent.ObjPtr != objectDtorEvent.ObjEvents.end(); ++objectDtorEvent.ObjPtr) {
-        EventPtrObj func = *objectDtorEvent.ObjPtr;
-        func(obj);
-    }
-}
-
 DECL_HOOKv(objectDtorHook, CObject* obj) {
-    CEvents::objectDtorCalls(obj);
+    callFuncs(objectDtorEvent.ObjPtr, objectDtorEvent.ObjEvents, EventPtrObj, obj);
     objectDtorHook(obj);
 }
 
-void CEvents::updateWidgetCalls(CWidget* w) {
-    for(updateWidgetsEvent.widgetPtr = updateWidgetsEvent.widgetEvents.begin(); updateWidgetsEvent.widgetPtr != updateWidgetsEvent.widgetEvents.end(); ++updateWidgetsEvent.widgetPtr) {
-        EventPtrWidget func = *updateWidgetsEvent.widgetPtr;
-        func(w);
-    }
-}
-
 DECL_HOOKi(updateWidgetsHook, CWidget* w) {
-    CEvents::updateWidgetCalls(w);
+    callFuncs(updateWidgetsEvent.widgetPtr, updateWidgetsEvent.widgetEvents, EventPtrWidget, w);
     return updateWidgetsHook(w);
 }
 
+
+
 CEvents::CEvents(EventsType type) {
+    eventType = type;
     switch(type){
         case updateWidgets:
             HOOKPLT(updateWidgetsHook, 0x66FBCC + libs.pGame);
