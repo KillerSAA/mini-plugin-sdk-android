@@ -56,11 +56,9 @@ public:
 	EventsType eventType;
 
 	// arguments
-    void operator+=(EventPtr p) {
-        events.push_back(p);
-    }
-
-
+	void operator+=(EventPtr p) {
+		events.push_back(p);
+    	}
 };
 
 
