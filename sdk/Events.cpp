@@ -4,6 +4,7 @@
 #include "injector.h"
 #include "Events.h"
 
+///////////// continuation of CEvents from Xmds /////////////
 
 CEvents initGameEvent(initGame);
 CEvents initScriptsEvent(initScripts);
