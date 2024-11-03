@@ -1,0 +1,71 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "clean",
+      "type": "shell",
+      "command": "${config:ndkHome}/build/ndk-build",
+      "args": [
+        "clean",
+        "NDK_PROJECT_PATH=${workspaceFolder}/build",
+        "APP_BUILD_SCRIPT=${workspaceFolder}/Android.mk",
+        "NDK_APPLICATION_MK=${workspaceFolder}/Application.mk"
+      ],
+      "presentation": {
+        "echo": false,
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "${config:ndkHome}/build/ndk-build",
+      "args": [
+        "NDK_PROJECT_PATH=${workspaceFolder}/build",
+        "APP_BUILD_SCRIPT=${workspaceFolder}/Android.mk",
+        "NDK_APPLICATION_MK=${workspaceFolder}/Application.mk",
+        "NDK_DEBUG=0"
+      ],
+      "presentation": {
+        "echo": false,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "push",
+      "type": "shell",
+      "command": "echo Pushing to ${config:appData}... & adb",
+      "args": [
+        "push",
+        "build/libs/armeabi-v7a/SeparatedMoney.so",
+        "${config:appData}/mods"
+      ],
+      "presentation": {
+        "echo": false,
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "build and push",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": "echo Done",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "build",
+        "push"
+      ],
+      "presentation": {
+        "echo": false,
+        "showReuseMessage": false
+      }
+    }
+  ]
+}
