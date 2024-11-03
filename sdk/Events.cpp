@@ -42,7 +42,6 @@ CEvents updateWidgetsEvent(updateWidgets);
 
 DECL_HOOKv(PedRenderHook, CPed* ped) {
     callFuncs(pedRenderEvent.PedPtr, pedRenderEvent.PedEvents, EventPtrPed, ped)
-    
     PedRenderHook(ped);
 }
 
