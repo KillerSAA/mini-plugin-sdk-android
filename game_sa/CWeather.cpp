@@ -1,7 +1,6 @@
 #include <mod/amlmod.h>
 #include <game_sa/sdk.h>
 #include <sdk/Call.h>
-#include <GlossHook/Gloss.h>
 
 #include "CAEWeatherAudioEntity.h"
 #include "CWeather.h"
