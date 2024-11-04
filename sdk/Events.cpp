@@ -46,6 +46,7 @@ void CEvents::pedRenderCalls(CPed* ped) {
 
 DECL_HOOKv(PedRenderHook, CPed* ped) {
     PedRenderHook(ped);
+    CEvents::pedRenderCalls(ped);
 }
 
 void CEvents::drawingCalls() {
@@ -53,8 +54,8 @@ void CEvents::drawingCalls() {
 }
 
 DECL_HOOKv(drawingHook) {
-    CEvents::drawingCalls();
     drawingHook();
+    CEvents::drawingCalls();
 }
 
 void CEvents::drawAfterFadeCalls() {
@@ -62,8 +63,8 @@ void CEvents::drawAfterFadeCalls() {
 }
 
 DECL_HOOKv(drawAfterFadeHook) {
-    CEvents::drawAfterFadeCalls();
     drawAfterFadeHook();
+    CEvents::drawAfterFadeCalls();
 }
 
 void CEvents::vehicleRenderCalls(CVehicle* veh) {
@@ -71,8 +72,8 @@ void CEvents::vehicleRenderCalls(CVehicle* veh) {
 }
 
 DECL_HOOKv(vehicleRenderHook, CVehicle* veh) {
-    CEvents::vehicleRenderCalls(veh);
     vehicleRenderHook(veh);
+    CEvents::vehicleRenderCalls(veh);
 }
 
 void CEvents::drawBlipsCalls(float size) {
@@ -80,8 +81,9 @@ void CEvents::drawBlipsCalls(float size) {
 }
 
 DECL_HOOKp(drawBlipsHook, float size) {
+    void* ret = drawBlipsHook(size);
     CEvents::drawBlipsCalls(size);
-    return drawBlipsHook(size);
+    return ret;
 }
 
 void CEvents::objectPreRenderCalls(CObject* obj) {
@@ -89,8 +91,8 @@ void CEvents::objectPreRenderCalls(CObject* obj) {
 }
 
 DECL_HOOKv(objectPreRenderHook, CObject* obj) {
-    CEvents::objectPreRenderCalls(obj);
     objectPreRenderHook(obj);
+    CEvents::objectPreRenderCalls(obj);
 }
 
 void CEvents::objectRenderCalls(CObject* obj) {
@@ -98,8 +100,8 @@ void CEvents::objectRenderCalls(CObject* obj) {
 }
 
 DECL_HOOKv(objectRenderHook, CObject* obj) {
-    CEvents::objectRenderCalls(obj);
     objectRenderHook(obj);
+    CEvents::objectRenderCalls(obj);
 }
 
 void CEvents::initRwCalls() {
@@ -107,8 +109,9 @@ void CEvents::initRwCalls() {
 }
 
 DECL_HOOKi(initRwHook) {
+    int ret = initRwHook();
     CEvents::initRwCalls();
-    return initRwHook();
+    return ret;
 }
 
 void CEvents::initPoolsCalls() {
@@ -116,8 +119,9 @@ void CEvents::initPoolsCalls() {
 }
 
 DECL_HOOKi(initPoolsHook) {
+    int ret = initPoolsHook();
     CEvents::initPoolsCalls();
-    return initPoolsHook();
+    return ret;
 }
 
 void CEvents::drawMenuCalls(void* gMobileMenu) {
@@ -125,8 +129,8 @@ void CEvents::drawMenuCalls(void* gMobileMenu) {
 }
 
 DECL_HOOKv(drawMenuHook, void* gMobileMenu) {
-    CEvents::drawMenuCalls(gMobileMenu);
     drawMenuHook(gMobileMenu);
+    CEvents::drawMenuCalls(gMobileMenu);
 }
 
 void CEvents::drawRadarCalls() {
@@ -134,8 +138,9 @@ void CEvents::drawRadarCalls() {
 }
 
 DECL_HOOKi(drawRadarHook) {
+    int ret = drawRadarHook();
     CEvents::drawRadarCalls();
-    return drawRadarHook();
+    return ret;
 }
 
 void CEvents::drawRadarOverlayCalls(bool inMenu) {
@@ -143,8 +148,8 @@ void CEvents::drawRadarOverlayCalls(bool inMenu) {
 }
 
 DECL_HOOKv(drawRadarOverlayHook, bool inMenu) {
-    CEvents::drawRadarOverlayCalls(inMenu);
     drawRadarOverlayHook(inMenu);
+    CEvents::drawRadarOverlayCalls(inMenu);
 }
 
 void CEvents::processScriptsCalls() {
@@ -152,8 +157,8 @@ void CEvents::processScriptsCalls() {
 }
 
 DECL_HOOKv(processScriptsHook) {
-    CEvents::processScriptsCalls();
     processScriptsHook();
+    CEvents::processScriptsCalls();
 }
 
 void CEvents::touchCalls(NVTouchEventType actionType, int trackNum, int x, int y) {
@@ -161,8 +166,8 @@ void CEvents::touchCalls(NVTouchEventType actionType, int trackNum, int x, int y
 }
 
 DECL_HOOKv(touchHook, NVTouchEventType actionType, int trackNum, int x, int y) {
-    CEvents::touchCalls(actionType, trackNum, x, y);
     touchHook(actionType, trackNum, x, y);
+    CEvents::touchCalls(actionType, trackNum, x, y);
 }
 
 void CEvents::initScriptsCalls() {
@@ -170,8 +175,9 @@ void CEvents::initScriptsCalls() {
 }
 
 DECL_HOOKi(initScriptsHook) {
+    int ret = initScriptsHook();
     CEvents::initScriptsCalls();
-    return initScriptsHook();
+    return ret;
 }
 
 void CEvents::renderCloudsCalls() {
@@ -179,8 +185,8 @@ void CEvents::renderCloudsCalls() {
 }
 
 DECL_HOOKi(renderCloudsHook) {
-    CEvents::renderCloudsCalls();
     return renderCloudsHook();
+    CEvents::renderCloudsCalls();
 }
 
 void CEvents::pedCtorCalls(CPed* ped) {
@@ -188,8 +194,8 @@ void CEvents::pedCtorCalls(CPed* ped) {
 }
 
 DECL_HOOKv(pedCtorHook, CPed* ped) {
-    CEvents::pedCtorCalls(ped);
     pedCtorHook(ped);
+    CEvents::pedCtorCalls(ped);
 }
 
 void CEvents::pedDtorCalls(CPed* ped) {
@@ -206,8 +212,8 @@ void CEvents::vehicleCtorCalls(CVehicle* veh) {
 }
 
 DECL_HOOKv(vehicleCtorHook, CVehicle* veh) {
-    CEvents::vehicleCtorCalls(veh);
     vehicleCtorHook(veh);
+    CEvents::vehicleCtorCalls(veh);
 }
 
 void CEvents::vehicleDtorCalls(CVehicle* veh) {
@@ -224,8 +230,8 @@ void CEvents::initGameCalls() {
 }
 
 DECL_HOOKv(initGameHook) {
-    CEvents::initGameCalls();
     initGameHook();
+    CEvents::initGameCalls();
 }
 
 void CEvents::objectCtorCalls(CObject* obj) {
@@ -233,8 +239,8 @@ void CEvents::objectCtorCalls(CObject* obj) {
 }
 
 DECL_HOOKv(objectCtorHook, CObject* obj) {
-    CEvents::objectCtorCalls(obj);
     objectCtorHook(obj);
+    CEvents::objectCtorCalls(obj);
 }
 
 void CEvents::objectDtorCalls(CObject* obj) {
@@ -251,8 +257,9 @@ void CEvents::updateWidgetCalls(CWidget* w) {
 }
 
 DECL_HOOKi(updateWidgetsHook, CWidget* w) {
+    int ret = updateWidgetsHook(w);
     CEvents::updateWidgetCalls(w);
-    return updateWidgetsHook(w);
+    return ret;
 }
 
 CEvents::CEvents(EventsType type) {
