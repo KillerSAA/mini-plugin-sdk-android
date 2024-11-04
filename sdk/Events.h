@@ -9,6 +9,8 @@
 
 #define addArgs(_func, _eventType) void operator+=(_func p) { _eventType.push_back(p); }
 
+///////////// continuation of CEvents from Xmds /////////////
+
 enum EventsType {
 	drawHud, //_ZN4CHud4DrawEv
 	drawing, //_ZN9CPopCycle7DisplayEv
