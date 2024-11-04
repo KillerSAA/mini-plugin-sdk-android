@@ -1,6 +1,5 @@
 #include <mod/amlmod.h>
 #include <game_sa/sdk.h>
-#include <GlossHook/Gloss.h>
 #include <sdk/Call.h>
 
 #include "MobileMenu.h"
