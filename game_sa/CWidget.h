@@ -7,13 +7,6 @@
 #include "eHIDMapping.h"
 #include "CVector.h"
 
-struct WidgetPosition {
-    float m_fOriginX;
-    float m_fOriginY;
-    float m_fScaleX;
-    float m_fScaleY;
-};
-
 enum WidgetIDs : int32_t
 {
   WIDGET_ENTER_CAR = 0x0,
