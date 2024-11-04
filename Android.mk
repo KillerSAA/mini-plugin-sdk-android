@@ -8,7 +8,7 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_CPP_EXTENSION := .cpp .cc
-LOCAL_MODULE    := FreeCam
+LOCAL_MODULE    := SDK
 LOCAL_SRC_FILES := main.cpp sdk/sdk.cpp mod/logger.cpp mod/config.cpp sdk/Events.cpp
 
 LOCAL_STATIC_LIBRARIES := libGlossHook
