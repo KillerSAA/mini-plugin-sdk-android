@@ -21,7 +21,9 @@ enum EventsType {
 	drawMenu, //_ZN10MobileMenu6RenderEv
 
 	initRw, //_ZN5CGame20InitialiseRenderWareEv
+	shutdownRw, // _Z13RsRwTerminatev
 	initPools, //_ZN6CPools10InitialiseEv
+	shutdownPools,
 	pedCtor, //_ZN4CPedC2Ej                       BLX CPhysical::CPhysical(void)
 	pedDtor, //_ZN4CPedD2Ev                       B.W CPhysical::~CPhysical
 	pedRender, //_ZN4CPed6RenderEv                BLX CEntity::Render(void)
@@ -69,7 +71,9 @@ public:
 	addArgs(EventPtrWidget, widgetEvents)
 
 	static void initRwCalls();
+	static void shutdownRwCalls();
 	static void initPoolsCalls();
+	static void shutdownPoolsCalls();
 	static void initGameCalls();
 	static void pedCtorCalls(CPed* ped);
 	static void pedDtorCalls(CPed* ped);
@@ -97,11 +101,11 @@ public:
 	static void updateWidgetCalls(CWidget* w);
 };
 
-
 extern CEvents renderCloudsEvent;
 extern CEvents initScriptsEvent;
 extern CEvents processScriptsEvent;
 extern CEvents initRwEvent;
+extern CEvents shutdownRwEvent;
 extern CEvents initPoolsEvent;
 extern CEvents pedCtorEvent;
 extern CEvents pedDtorEvent;

@@ -8,7 +8,9 @@
 CEvents initGameEvent(initGame);
 CEvents initScriptsEvent(initScripts);
 CEvents initRwEvent(initRw);
+CEvents shutdownRwEvent(shutdownRw); 
 CEvents initPoolsEvent(initPools);
+CEvents shutdownPoolsEvent(shutdownPools);
 
 CEvents pedCtorEvent(pedCtor);
 CEvents pedDtorEvent(pedDtor);
@@ -114,6 +116,15 @@ DECL_HOOKi(initRwHook) {
     return ret;
 }
 
+void CEvents::shutdownRwCalls() {
+    callFuncs(shutdownRwEvent.actPtr, shutdownRwEvent.events, EventPtr);
+}
+
+DECL_HOOKv(shutdownRwHook) {
+    CEvents::shutdownRwCalls();
+    shutdownRwHook();
+}
+
 void CEvents::initPoolsCalls() {
     callFuncs(initPoolsEvent.actPtr, initPoolsEvent.events, EventPtr);
 }
@@ -122,6 +133,15 @@ DECL_HOOKi(initPoolsHook) {
     int ret = initPoolsHook();
     CEvents::initPoolsCalls();
     return ret;
+}
+
+void CEvents::shutdownPoolsCalls() {
+    callFuncs(shutdownPoolsEvent.actPtr, shutdownPoolsEvent.events, EventPtr);
+}
+
+DECL_HOOKv(shutdownPoolsHook) {
+    CEvents::shutdownPoolsCalls();
+    shutdownPoolsHook();
 }
 
 void CEvents::drawMenuCalls(void* gMobileMenu) {
@@ -277,6 +297,9 @@ CEvents::CEvents(EventsType type) {
         case initPools:
             HOOKPLT(initPoolsHook, 0x672468 + libs.pGame);
             break;
+        case shutdownPools:
+            HOOKBLX(shutdownPoolsHook, GetSym("_ZN5CGame8ShutdownEv") + 0x15C);
+            break;
         case initRw:
             HOOKPLT(initRwHook, 0x66F2D0 + libs.pGame);
             break;
@@ -341,6 +364,9 @@ CEvents::CEvents(EventsType type) {
         case drawAfterFade:
             HOOKPLT(drawAfterFadeHook, 0x673C4C + libs.pGame);
             break;    
+        case shutdownRw:
+            HOOKBLX(shutdownRwHook, GetSym("_Z15AppEventHandler7RsEventPv") + 0x94);
+            break;
         default:
             break;
     }
