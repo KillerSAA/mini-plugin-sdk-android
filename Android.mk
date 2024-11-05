@@ -1,12 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := GlossHook
-LOCAL_SRC_FILES := $(LOCAL_PATH)/GlossHook/lib/$(TARGET_ARCH)/libGlossHook.a
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/GlossHook/
-include $(PREBUILT_STATIC_LIBRARY)
-
-include $(CLEAR_VARS)
 LOCAL_CPP_EXTENSION := .cpp .cc
 LOCAL_MODULE    := SDK
 LOCAL_SRC_FILES := main.cpp sdk/sdk.cpp mod/logger.cpp mod/config.cpp sdk/Events.cpp
