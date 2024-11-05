@@ -10,7 +10,7 @@ struct CTouchInterface {
 
     static int &m_nMaxTouches;
     static const char* m_pszWidgetPositionNames; //m_pszWidgetPositionNames[138]
-    static CWidget *m_pWidgets; // [190]
+    static CWidget **m_pWidgets; // [190]
     static WidgetPosition *m_WidgetPosition; // [138]
     static bool &m_bPinchZoom;
     static bool &m_bTouchDown; // [4]
